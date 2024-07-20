@@ -1,4 +1,5 @@
 ﻿using RestauranteService.Dtos;
+using RestauranteService.RabbitMqClient;
 using System.Text;
 using System.Text.Json;
 
@@ -8,6 +9,7 @@ namespace RestauranteService.ItemServiceHttpClient
     {
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
+        private IRabbitMqClient _rabbitMqClient;
 
         public ItemServiceHttpClient(HttpClient client, IConfiguration configuration)
         {
@@ -17,14 +19,16 @@ namespace RestauranteService.ItemServiceHttpClient
 
         public async void EnviaRestauranteParaItemService(RestauranteReadDto readDto)
         {
-            var conteudoHttp = new StringContent
-                (
-                    JsonSerializer.Serialize(readDto),
-                    Encoding.UTF8,
-                    "application/json"
-                );
+            _rabbitMqClient.PublicarRestaurante(readDto);
 
-            await _client.PostAsync(_configuration["ItemService"], conteudoHttp);
+           // var conteudoHttp = new StringContent
+           //     (
+           //         JsonSerializer.Serialize(readDto),
+           //         Encoding.UTF8,
+           //         "application/json"
+           //     );
+           //
+           // await _client.PostAsync(_configuration["ItemService"], conteudoHttp);
         }
     }
 }

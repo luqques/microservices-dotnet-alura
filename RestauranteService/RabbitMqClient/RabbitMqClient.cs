@@ -11,7 +11,7 @@ namespace RestauranteService.RabbitMqClient
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public RabbitMqClient(IConfiguration configuration, IConnection connection, RabbitMQ.Client.IModel channel)
+        public RabbitMqClient(IConfiguration configuration)
         {
             _configuration = configuration;
             _connection = new ConnectionFactory() { HostName = _configuration["RabbitMq.Host"], Port = Int32.Parse(_configuration["RabbitMq.Port"]) }.CreateConnection(); ;

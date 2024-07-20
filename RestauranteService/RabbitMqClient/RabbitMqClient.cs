@@ -14,7 +14,7 @@ namespace RestauranteService.RabbitMqClient
         public RabbitMqClient(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connection = new ConnectionFactory() { HostName = _configuration["RabbitMq.Host"], Port = Int32.Parse(_configuration["RabbitMq.Port"]) }.CreateConnection(); ;
+            _connection = new ConnectionFactory() { HostName = _configuration["RabbitMq:Host"], Port = Int32.Parse(_configuration["RabbitMq:Port"]) }.CreateConnection(); ;
             _channel = _connection.CreateModel();
             _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
         }

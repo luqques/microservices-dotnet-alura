@@ -48,14 +48,13 @@ public class RestauranteController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<RestauranteReadDto>> CreateRestaurante(RestauranteCreateDto restauranteCreateDto)
     {
-        var restaurante = _mapper.Map<Restaurante>(restauranteCreateDto);
+        Restaurante restaurante = _mapper.Map<Restaurante>(restauranteCreateDto);
         _repository.CreateRestaurante(restaurante);
         _repository.SaveChanges();
 
-        var restauranteReadDto = _mapper.Map<RestauranteReadDto>(restaurante);
+        RestauranteReadDto? restauranteReadDto = _mapper.Map<RestauranteReadDto>(restaurante);
 
         _itemServiceHttpClient.EnviaRestauranteParaItemService(restauranteReadDto);
-
 
         return CreatedAtRoute(nameof(GetRestauranteById), new { restauranteReadDto.Id }, restauranteReadDto);
     }

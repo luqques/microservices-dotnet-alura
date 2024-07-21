@@ -21,15 +21,6 @@ namespace RestauranteService.ItemServiceHttpClient
         public void EnviaRestauranteParaItemService(RestauranteReadDto readDto)
         {
             _rabbitMqClient.PublicarRestaurante(readDto);
-
-           // var conteudoHttp = new StringContent
-           //     (
-           //         JsonSerializer.Serialize(readDto),
-           //         Encoding.UTF8,
-           //         "application/json"
-           //     );
-           //
-           // await _client.PostAsync(_configuration["ItemService"], conteudoHttp);
         }
     }
 }
